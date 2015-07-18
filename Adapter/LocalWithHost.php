@@ -28,11 +28,19 @@ class LocalWithHost extends Local
 
     public function getBasePath()
     {
+        $port = "";
+        if (
+            ('http' === $this->scheme && 80 !== $this->port) ||
+            ('https' === $this->scheme && 443 !== $this->port)
+        ) {
+            $port = ":" . $this->port;
+        }
+
         $basePath = sprintf(
-          '%s://%s:%s',
+          '%s://%s%s',
           $this->scheme,
           $this->httpHost,
-          $this->port
+          $port
         );
         return $basePath;
     }
