@@ -5,6 +5,9 @@
 
            <services>
                <!-- Adapter factories -->
+               <service id="oneup_flysystem.adapter_factory.local_with_host" class="Oneup\FlysystemBundle\DependencyInjection\Factory\Adapter\LocalWithHostFactory">
+                   <tag name="oneup_flysystem.adapter_factory" />
+               </service>
                <service id="oneup_flysystem.adapter_factory.local" class="Oneup\FlysystemBundle\DependencyInjection\Factory\Adapter\LocalFactory">
                    <tag name="oneup_flysystem.adapter_factory" />
                </service>
