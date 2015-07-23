@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class LocalWithHost extends Local
 {
     private $requestStack;
-    private $scheme;
-    private $httpHost;
-    private $port;
+    private $scheme = "http";
+    private $httpHost = "localhost";
+    private $port = 80;
     private $webpath;
 
     public function __construct(
@@ -20,9 +20,11 @@ class LocalWithHost extends Local
     ) {
         parent::__construct($root);
         $request = $requestStack->getCurrentRequest();
-        $this->scheme = $request->getScheme();
-        $this->httpHost = $request->getHttpHost();
-        $this->port = $request->getPort();
+        if (null !== $request) {
+            $this->scheme = $request->getScheme();
+            $this->httpHost = $request->getHttpHost();
+            $this->port = $request->getPort();
+        }
         $this->webpath = $webpath;
     }
 
