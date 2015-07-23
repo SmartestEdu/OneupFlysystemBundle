@@ -16,12 +16,15 @@ class LocalWithHostFactory implements AdapterFactoryInterface
 
     public function create(ContainerBuilder $container, $id, array $config)
     {
-        $container
-            ->setDefinition($id, new DefinitionDecorator('oneup_flysystem.adapter.local_with_host'))
-            ->replaceArgument(0, $config['directory'])
-            ->replaceArgument(2, $config['webpath'])
-            ->replaceArgument(3, $config['defaults'])
-        ;
+        $definition = new DefinitionDecorator('oneup_flysystem.adapter.local_with_host');
+        $definition->replaceArgument(0, $config['directory']);
+        $definition->replaceArgument(2, $config['webpath']);
+        
+        if (isset($config['defaults'])) {
+            $definition->replaceArgument(3, $config['defaults']);
+        }
+
+        $container->setDefinition($id, $definition);
     }
 
     public function addConfiguration(NodeDefinition $node)
