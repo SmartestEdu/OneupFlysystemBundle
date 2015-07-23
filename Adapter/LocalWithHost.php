@@ -8,21 +8,36 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class LocalWithHost extends Local
 {
     private $requestStack;
-    private $scheme;
-    private $httpHost;
-    private $port;
+    private $scheme = "http";
+    private $httpHost = "localhost";
+    private $port = 80;
     private $webpath;
 
     public function __construct(
         $root,
         RequestStack $requestStack,
-        $webpath
+        $webpath,
+        $defaults
     ) {
         parent::__construct($root);
+
         $request = $requestStack->getCurrentRequest();
-        $this->scheme = $request->getScheme();
-        $this->httpHost = $request->getHttpHost();
-        $this->port = $request->getPort();
+        if (null !== $request) {
+            $this->scheme = $request->getScheme();
+            $this->httpHost = $request->getHttpHost();
+            $this->port = $request->getPort();
+        } else {
+            if (isset($defaults['httpHost'])) {
+                $this->httpHost = $defaults['httpHost'];
+            }
+            if (isset($defaults['port'])) {
+                $this->port = $defaults['port'];
+            }
+            if (isset($defaults['scheme'])) {
+                $this->scheme = $defaults['scheme'];
+            }
+        }
+
         $this->webpath = $webpath;
     }
 
