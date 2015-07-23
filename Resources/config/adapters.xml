@@ -8,6 +8,7 @@
                    <argument /><!-- Directory -->
                    <argument type="service" id="request_stack"/><!-- RequestStack -->
                    <argument /><!-- Webpath -->
+                   <argument on-invalid="ignore"/><!-- Defaults -->
                </service>
                <service id="oneup_flysystem.adapter.local" class="League\Flysystem\Adapter\Local" abstract="true" public="false">
                    <argument /><!-- Directory -->

@@ -20,6 +20,7 @@ class LocalWithHostFactory implements AdapterFactoryInterface
             ->setDefinition($id, new DefinitionDecorator('oneup_flysystem.adapter.local_with_host'))
             ->replaceArgument(0, $config['directory'])
             ->replaceArgument(2, $config['webpath'])
+            ->replaceArgument(3, $config['defaults'])
         ;
     }
 
@@ -29,6 +30,13 @@ class LocalWithHostFactory implements AdapterFactoryInterface
             ->children()
                 ->scalarNode('directory')->isRequired()->end()
                 ->scalarNode('webpath')->isRequired()->end()
+                ->arrayNode('defaults')
+                    ->children()
+                        ->scalarNode('scheme')->end()
+                        ->scalarNode('httpHost')->end()
+                        ->scalarNode('port')->end()
+                    ->end()
+                ->end()
             ->end()
         ;
     }
